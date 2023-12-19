@@ -3,8 +3,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   name                  = "${var.vmname}-vm"
   admin_username        = "mattglg"
   admin_password        = var.vmpassword
-  location              = var.azurerm_resource_group.rg.location
-  resource_group_name   = var.azurerm_resource_group.rg.name
+  location              = var.azurerm_resource_group.location
+  resource_group_name   = var.azurerm_resource_group.name
   network_interface_ids = [azurerm_network_interface.nic.id]
   size                  = var.size
 
@@ -29,7 +29,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 # Create an auto shutdown schedule fot the VM
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "sds" {
   virtual_machine_id = azurerm_windows_virtual_machine.vm.id
-  location           = var.azurerm_resource_group.rg.location
+  location           = var.azurerm_resource_group.location
   enabled            = true
 
   daily_recurrence_time = "2300"
