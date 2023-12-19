@@ -19,9 +19,8 @@ variable "size" {
 }
 
 variable "azurerm_resource_group" {
-  type    = any({
+  type    = object({
     name = string
     location = string
-    resource_group_name = string
     })
 }
