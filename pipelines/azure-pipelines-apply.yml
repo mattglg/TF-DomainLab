@@ -1,0 +1,84 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+#  name: Default
+
+stages:
+  - stage:  tfvalidate
+    jobs:
+      - job: validate
+        continueOnError: false
+        steps:
+        - task: TerraformInstaller@1
+          displayName: install
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTaskV4@4
+          displayName: init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'MSDN'
+            backendAzureRmResourceGroupName: 'devops'
+            backendAzureRmStorageAccountName: 'adomattglg'
+            backendAzureRmContainerName: 'terraform'
+            backendAzureRmKey: '$(Build.Repository.Name).tfstate'
+        - task: TerraformTaskV4@4
+          displayName: validate
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+        - task: TerraformTaskV4@4
+          displayName: plan
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            environmentServiceNameAzureRM: 'MSDN'
+        - task: TerraformTaskV4@4
+          displayName: show
+          inputs:
+            provider: 'azurerm'
+            command: 'show'
+            outputTo: 'console'
+            outputFormat: 'default'
+            environmentServiceNameAzureRM: 'MSDN'
+  - stage:  tfapply
+    condition: succeeded('tfvalidate')
+    dependsOn: tfvalidate
+    jobs:
+      - job: apply
+        continueOnError: false
+        steps:
+        - task: TerraformInstaller@1
+          displayName: install
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTaskV4@4
+          displayName: init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'MSDN'
+            backendAzureRmResourceGroupName: 'devops'
+            backendAzureRmStorageAccountName: 'adomattglg'
+            backendAzureRmContainerName: 'terraform'
+            backendAzureRmKey: '$(Build.Repository.Name).tfstate'
+        - task: TerraformTaskV4@4
+          displayName: validate
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+        - task: TerraformTaskV4@4
+          displayName: plan
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            environmentServiceNameAzureRM: 'MSDN'
+        - task: TerraformTaskV4@4
+          displayName: apply
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            environmentServiceNameAzureRM: 'MSDN'
