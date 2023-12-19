@@ -27,10 +27,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
     version   = "latest"
   }
 
-
-  boot_diagnostics {
-    storage_account_uri = data.azurerm_storage_account.vmdiags-st.primary_blob_endpoint
-  }
+  #boot_diagnostics {
+  #  storage_account_uri = data.azurerm_storage_account.vmdiags-st.primary_blob_endpoint
+  #}
 }
 
 # Create an auto shutdown schedule fot the VM
