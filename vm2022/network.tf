@@ -1,16 +1,16 @@
 # Create public IPs
 resource "azurerm_public_ip" "pip" {
   name                = "${var.vmname}-pip"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.azurerm_resource_group.rg.location
+  resource_group_name = var.azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
 }
 
 # Create Network Security Group and rules
 resource "azurerm_network_security_group" "nsg" {
   name                = "${var.vmname}-nsg"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.azurerm_resource_group.rg.location
+  resource_group_name = var.azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "RDP"
@@ -39,8 +39,8 @@ resource "azurerm_network_security_group" "nsg" {
 # Create network interface
 resource "azurerm_network_interface" "nic" {
   name                = "${var.vmname}-nic"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.azurerm_resource_group.rg.location
+  resource_group_name = var.azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = "${var.vmname}_nic_configuration"
