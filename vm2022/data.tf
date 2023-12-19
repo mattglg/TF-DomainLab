@@ -12,7 +12,7 @@ data "azurerm_subnet" "snet" {
 }
 
 # Read in the storage account to be used for VM boot diagnostics
-data "azurerm_storage_account" "vmdiags-st" {
-  name                = "vmdiagsst0337b73f"
-  resource_group_name = "rg-iac-network"
-}
+#data "azurerm_storage_account" "vmdiags-st" {
+#  name                = "vmdiagsst0337b73f"
+#  resource_group_name = "rg-iac-network"
+#}
