@@ -1,6 +1,5 @@
 variable "vmname" {
   type    = string
-  default = "vm1"
 }
 
 variable "vmpassword" {
