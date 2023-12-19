@@ -48,6 +48,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "sds" {
   }
 }
 
+/*
 resource "azurerm_virtual_machine_extension" "bginfo" {
   name                 = "BGInfo"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
@@ -55,3 +56,4 @@ resource "azurerm_virtual_machine_extension" "bginfo" {
   type                 = "BGInfo"
   type_handler_version = "2.1"
 }
+*/
