@@ -1,6 +1,7 @@
 # Create virtual machine
 resource "azurerm_windows_virtual_machine" "vm" {
   name                  = "${var.vmname}-vm"
+  computer_name         = "${var.vmname}"
   admin_username        = "mattglg"
   admin_password        = var.vmpassword
   location              = var.azurerm_resource_group.location
@@ -11,7 +12,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   os_disk {
     name                 = "${var.vmname}-osdisk"
     caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    storage_account_type = "StandardSSD_LRS"
   }
 
   source_image_reference {
