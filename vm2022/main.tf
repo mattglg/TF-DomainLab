@@ -1,12 +1,12 @@
 # Create a resource group fot the VM
 resource "azurerm_resource_group" "rg" {
   location = var.location
-  name     = "${var.prefix}-rg"
+  name     = "${var.vmname}-rg"
 }
 
 # Create virtual machine
 resource "azurerm_windows_virtual_machine" "vm" {
-  name                  = "${var.prefix}-vm"
+  name                  = "${var.vmname}-vm"
   admin_username        = "mattglg"
   admin_password        = var.vmpassword
   location              = azurerm_resource_group.rg.location
@@ -15,7 +15,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   size                  = var.size
 
   os_disk {
-    name                 = "${var.prefix}-osdisk"
+    name                 = "${var.vmname}-osdisk"
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
   }
