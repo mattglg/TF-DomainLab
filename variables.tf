@@ -1,6 +1,6 @@
-variable "vmname" {
+variable "envname" {
   type    = string
-  default = "vm1"
+  default = "testenv1"
 }
 
 variable "vmpassword" {
