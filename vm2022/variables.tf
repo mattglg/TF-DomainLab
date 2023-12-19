@@ -18,3 +18,10 @@ variable "size" {
   default = "Standard_DS1_v2"
 }
 
+variable "rg" {
+  type    = object({
+    name = string
+    location = string
+    resource_group_name = string
+    })
+}
