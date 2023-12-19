@@ -18,7 +18,7 @@ variable "size" {
   default = "Standard_DS1_v2"
 }
 
-variable "resource_group" {
+variable "azurerm_resource_group" {
   type    = object({
     name = string
     location = string
