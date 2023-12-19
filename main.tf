@@ -10,10 +10,3 @@ module "vm1" {
     vmname = "vm1"
     azurerm_subnet = data.azurerm_subnet.snet
 }
-
-module "vm2" {
-    source = "./vm2022"
-    azurerm_resource_group = azurerm_resource_group.rg
-    vmname = "vm2"
-    azurerm_subnet = data.azurerm_subnet.snet
-}
