@@ -1,4 +1,4 @@
-variable "prefix" {
+variable "vmname" {
   type    = string
   default = "vm1"
 }
