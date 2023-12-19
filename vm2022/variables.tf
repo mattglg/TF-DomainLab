@@ -24,3 +24,9 @@ variable "azurerm_resource_group" {
     location = string
     })
 }
+
+variable "azurerm_subnet" {
+  type    = object({
+    id = string
+    })
+}
