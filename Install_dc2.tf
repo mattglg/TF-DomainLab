@@ -1,3 +1,27 @@
+#Domain Join DC2
+resource "azurerm_virtual_machine_extension" "domjoin" {
+depends_on=[module.dc2]
+name = "domjoin"
+virtual_machine_id = module.dc2.id
+publisher = "Microsoft.Compute"
+type = "JsonADDomainExtension"
+type_handler_version = "1.3"
+# What the settings mean: https://docs.microsoft.com/en-us/windows/desktop/api/lmjoin/nf-lmjoin-netjoindomain
+settings = <<SETTINGS
+{
+"Name": "pixelrobots.co.uk",
+"User": "${var.ad_domain_name}\\${var.ad_admin_username}",
+"Restart": "true",
+"Options": "3"
+}
+SETTINGS
+protected_settings = <<PROTECTED_SETTINGS
+{
+"Password": "${var.ad_admin_password}"
+}
+PROTECTED_SETTINGS
+}
+
 # Local variables for DC2
 locals {
   dc2_fqdn = "${var.ad_dc2_name}.${var.ad_domain_name}"
@@ -23,7 +47,7 @@ locals {
 
 # DC1 virtual machine extension - Install and configure AD
 resource "azurerm_virtual_machine_extension" "dc2-vm-extension" {
-  depends_on=[module.dc2]
+  depends_on=[azure.azurerm_virtual_machine_extension.domjoin]
 
   name                 = "${var.ad_dc2_name}-vm-active-directory"
   virtual_machine_id   = module.dc2.id
