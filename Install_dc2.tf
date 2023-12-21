@@ -9,7 +9,7 @@ type_handler_version = "1.3"
 # What the settings mean: https://docs.microsoft.com/en-us/windows/desktop/api/lmjoin/nf-lmjoin-netjoindomain
 settings = <<SETTINGS
 {
-"Name": "pixelrobots.co.uk",
+"Name": "${var.ad_domain_name}",
 "User": "${var.ad_domain_name}\\${var.ad_admin_username}",
 "Restart": "true",
 "Options": "3"
