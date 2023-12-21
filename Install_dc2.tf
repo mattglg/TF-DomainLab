@@ -26,7 +26,7 @@ resource "azurerm_virtual_machine_extension" "dc2-vm-extension" {
   depends_on=[module.dc2]
 
   name                 = "${var.ad_dc2_name}-vm-active-directory"
-  virtual_machine_id   = module.dc1.id
+  virtual_machine_id   = module.dc2.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"  
