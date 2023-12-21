@@ -38,7 +38,7 @@ variable "ipaddress" {
 
 # domain controller 1 private ip address
 variable "dnsservers" {
-  type        = string
+  type        = any
   description = "This variable defines the private ip address of AD Domain Controller 1"
 }
 
