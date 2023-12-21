@@ -17,9 +17,9 @@ resource "azurerm_availability_set" "dc-availability-set" {
 module "dc1" {
     source = "./vm-dc"
     azurerm_resource_group = azurerm_resource_group.rg
-    vmname = ad_dc1_name
+    vmname = var.ad_dc1_name
     azurerm_subnet = data.azurerm_subnet.snet
-    ipaddress = ad_dc1_ip_address
+    ipaddress = var.ad_dc1_ip_address
     dnsservers = local.dns_servers
     availability_set_id = azurerm_availability_set.dc-availability-set.id
 }
