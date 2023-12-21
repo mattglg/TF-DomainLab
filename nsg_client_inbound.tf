@@ -6,7 +6,7 @@ resource "azurerm_network_security_rule" "udp_53_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 53 DNS UDP - DC${count.index+1} Inbound"
   description                 = "AD 53 DNS UDP - DC${count.index+1} Inbound"
@@ -26,7 +26,7 @@ resource "azurerm_network_security_rule" "tcp_88_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 88 Kerberos TCP - DC${count.index+1} Inbound"
   description                 = "AD 88 Kerberos TCP - DC${count.index+1} Inbound"
@@ -46,7 +46,7 @@ resource "azurerm_network_security_rule" "tcp_135_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 135 RPC TCP - DC${count.index+1} Inbound"
   description                 = "AD 135 RPC TCP - DC${count.index+1} Inbound"
@@ -66,7 +66,7 @@ resource "azurerm_network_security_rule" "tcp_389_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 389 LDAP TCP - DC${count.index+1} Inbound"
   description                 = "AD 389 LDAP TCP - DC${count.index+1} Inbound"
@@ -86,7 +86,7 @@ resource "azurerm_network_security_rule" "tcp_445_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 445 SMB TCP - DC${count.index+1} Inbound"
   description                 = "AD 445 SMB TCP - DC${count.index+1} Inbound"
@@ -106,7 +106,7 @@ resource "azurerm_network_security_rule" "tcp_49152-65535_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 49152-65535 TCP - DC${count.index+1} Inbound"
   description                 = "AD 49152-65535 TCP - DC${count.index+1} Inbound"
@@ -126,7 +126,7 @@ resource "azurerm_network_security_rule" "udp_49152-65535_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 49152-65535 UDP - DC${count.index+1} Inbound"
   description                 = "AD 49152-65535 UDP - DC${count.index+1} Inbound"
@@ -146,7 +146,7 @@ resource "azurerm_network_security_rule" "icmp_client_inbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD Ping to DC${count.index+1} Inbound"
   description                 = "AD Ping to DC${count.index+1} Inbound"
@@ -159,3 +159,24 @@ resource "azurerm_network_security_rule" "icmp_client_inbound" {
   source_address_prefix       = local.dns_servers[count.index]
   destination_address_prefix  = "*"
 }
+
+# Port 3389 RDP TCP/UDP
+resource "azurerm_network_security_rule" "rdp_3389_client_inbound" {
+  depends_on = [azurerm_resource_group.rg]
+
+  count = length(local.dns_servers)
+
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
+  resource_group_name         = azurerm_resource_group.rg.name
+  name                        = "AD 3389 RDP - DC${count.index+1} Inbound"
+  description                 = "AD 3389 RDP - DC${count.index+1} Inbound"
+  priority                    = (230 + count.index)
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefix       = local.dns_servers[count.index]
+  destination_address_prefix  = "*"
+}
+

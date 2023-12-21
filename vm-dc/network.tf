@@ -41,9 +41,3 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
 }
-
-# Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "nsga" {
-  network_interface_id      = azurerm_network_interface.nic.id
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
