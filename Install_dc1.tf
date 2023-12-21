@@ -17,6 +17,7 @@ locals {
   dc1_powershell_command   = "${local.dc1_prereq_ad_1}; ${local.dc1_prereq_ad_2}; ${local.dc1_prereq_ad_3}; ${local.dc1_prereq_ad_4}; ${local.dc1_prereq_ad_5}; ${local.dc1_install_ad_1}${local.dc1_install_ad_2}${local.dc1_install_ad_3}; ${local.dc1_shutdown_command}; ${local.dc1_exit_code_hack}"
 }
 
+# DC1 virtual machine extension - Install and configure AD
 resource "azurerm_virtual_machine_extension" "dc1-vm-extension" {
   depends_on=[azurerm_windows_virtual_machine.dc1-vm]
 
@@ -25,7 +26,8 @@ resource "azurerm_virtual_machine_extension" "dc1-vm-extension" {
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"  
-  settings = <  {
+  settings = <<SETTINGS
+  {
     "commandToExecute": "powershell.exe -Command \"${local.dc1_powershell_command}\""
   }
   SETTINGS
