@@ -52,13 +52,13 @@ module "vm1" {
 # Create the security group for AD Users
 resource "azurerm_network_security_group" "active-directory-client-nsg" {
   name                = "active-directory-client-nsg"
-  location            = azurerm_resource_group.network-rg.location
-  resource_group_name = azurerm_resource_group.network-rg.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 }
 
 # Create the security group for AD Domain Controllers
 resource "azurerm_network_security_group" "active-directory-dc-nsg" {
   name                = "active-directory-dc-nsg"
-  location            = azurerm_resource_group.network-rg.location
-  resource_group_name = azurerm_resource_group.network-rg.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 }

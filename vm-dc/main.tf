@@ -30,9 +30,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   # Set Dependancy to avoid failures on destroy
   # https://azapril.dev/2020/05/12/terraform-depends_on/
-  depends_on = [
-    azurerm_network_interface_security_group_association.nsga
-  ]
+  #depends_on = [
+  #  azurerm_network_interface_security_group_association.nsga
+  #]
 }
 
 # Create an auto shutdown schedule fot the VM
