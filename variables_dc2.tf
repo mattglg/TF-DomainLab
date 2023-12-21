@@ -41,10 +41,3 @@ variable "ad_dc2_ip_address" {
   description = "This variable defines the private IP address of AD Domain Controller 2"
   default = "10.0.1.11"
 }
-
-# domain controller 2private ip address
-variable "oupath" {
-  type        = string
-  description = "This variable defines the private IP address of AD Domain Controller 2"
-  default = "10.0.1.11"
-}
