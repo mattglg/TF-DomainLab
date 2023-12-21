@@ -41,3 +41,9 @@ variable "dnsservers" {
   type        = string
   description = "This variable defines the private ip address of AD Domain Controller 1"
 }
+
+# domain controller 1 private ip address
+variable "availability_set_id" {
+  type        = string
+  description = "This variable defines the private ip address of AD Domain Controller 1"
+}

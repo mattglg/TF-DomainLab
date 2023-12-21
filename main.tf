@@ -21,6 +21,7 @@ module "dc1" {
     azurerm_subnet = data.azurerm_subnet.snet
     ipaddress = ad_dc1_ip_address
     dnsservers = local.dns_servers
+    availability_set_id = azurerm_availability_set.dc-availability-set.id
 }
 
 /*

@@ -32,10 +32,12 @@ variable "dc1_delete_data_disks_on_termination" {
 variable "ad_dc1_name" {
   type        = string
   description = "This variable defines the name of AD Domain Controller 1"
+  default = "dc1"
 }
 
 # domain controller 1 private ip address
 variable "ad_dc1_ip_address" {
   type        = string
   description = "This variable defines the private ip address of AD Domain Controller 1"
+  default = "10.0.1.1"
 }

@@ -9,6 +9,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.nic.id]
   size                  = var.size
 
+  availability_set_id = var.availability_set_id
+
   os_disk {
     name                 = "${var.vmname}-osdisk"
     caching              = "ReadWrite"
