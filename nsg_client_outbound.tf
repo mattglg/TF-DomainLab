@@ -6,7 +6,7 @@ resource "azurerm_network_security_rule" "udp_53_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 53 DNS UDP - DC${count.index+1} Outbound"
   description                 = "AD 53 DNS UDP - DC${count.index+1} Outbound"
@@ -26,7 +26,7 @@ resource "azurerm_network_security_rule" "tcp_88_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 88 Kerberos TCP - DC${count.index+1} Outbound"
   description                 = "AD 88 Kerberos TCP - DC${count.index+1} Outbound"
@@ -46,7 +46,7 @@ resource "azurerm_network_security_rule" "tcp_135_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 135 RPC TCP - DC${count.index+1} Outbound"
   description                 = "AD 135 RPC TCP - DC${count.index+1} Outbound"
@@ -66,7 +66,7 @@ resource "azurerm_network_security_rule" "tcp_389_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 389 LDAP TCP - DC${count.index+1} Outbound"
   description                 = "AD 389 LDAP TCP - DC${count.index+1} Outbound"
@@ -86,7 +86,7 @@ resource "azurerm_network_security_rule" "tcp_445_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 445 SMB TCP - DC${count.index+1} Outbound"
   description                 = "AD 445 SMB TCP - DC${count.index+1} Outbound"
@@ -106,7 +106,7 @@ resource "azurerm_network_security_rule" "tcp_49152-65535_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 49152-65535 TCP - DC${count.index+1} Outbound"
   description                 = "AD 49152-65535 TCP - DC${count.index+1} Outbound"
@@ -126,7 +126,7 @@ resource "azurerm_network_security_rule" "udp_49152-65535_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD 49152-65535 UDP - DC${count.index+1} Outbound"
   description                 = "AD 49152-65535 UDP - DC${count.index+1} Outbound"
@@ -146,7 +146,7 @@ resource "azurerm_network_security_rule" "icmp_client_outbound" {
 
   count = length(local.dns_servers)
 
-  network_security_group_name = azurerm_network_security_group.nsg.name
+  network_security_group_name = azurerm_network_security_group.active-directory-client-nsg.name
   resource_group_name         = azurerm_resource_group.rg.name
   name                        = "AD Ping to DC${count.index+1} Outbound"
   description                 = "AD Ping to DC${count.index+1} Outbound"
