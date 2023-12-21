@@ -8,7 +8,7 @@ resource "azurerm_availability_set" "dc-availability-set" {
   name                         = "${var.envname}-dc-avail"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
-  platform_fault_domain_count  = 3
+  platform_fault_domain_count  = 2
   platform_update_domain_count = 5
   managed                      = true
 }
