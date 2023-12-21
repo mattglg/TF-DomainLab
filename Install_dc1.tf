@@ -19,10 +19,10 @@ locals {
 
 # DC1 virtual machine extension - Install and configure AD
 resource "azurerm_virtual_machine_extension" "dc1-vm-extension" {
-  depends_on=[azurerm_windows_virtual_machine.dc1-vm]
+  depends_on=[module.dc1]
 
   name                 = "${var.ad_dc1_name}-vm-active-directory"
-  virtual_machine_id   = azurerm_windows_virtual_machine.dc1-vm.id
+  virtual_machine_id   = module.dc1.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"  
