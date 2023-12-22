@@ -12,7 +12,6 @@ param
     [Parameter(ValuefromPipeline=$true,Mandatory=$true)] [String]$ad_safe_mode_administrator_password
 )
 
-Start-Transcript -Path C:\Temp\server_setup.txt -Append
 $SMAP = ConvertTo-SecureString -AsPlainText $ad_safe_mode_administrator_password -Force
 
 $User = "$ad_admin_username@$ad_domain_name"
@@ -24,5 +23,4 @@ Install-WindowsFeature -name AD-Domain-Services -IncludeManagementTools
 
 Install-ADDSDomainController -DomainName $ad_domain_name -Credential $Credential -CreateDnsDelegation:$false -DatabasePath $ad_database_path -SysvolPath $ad_sysvol_path -LogPath $ad_log_path -Force:$true -SkipPreChecks -SafeModeAdministratorPassword $SMAP -NoRebootOnCompletion:$false -InstallDns:$true
 Set-DnsServerForwarder -IPAddress "8.8.8.8", "1.1.1.1"
-Stop-Transcript
 exit 0
