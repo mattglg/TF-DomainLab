@@ -1,6 +1,6 @@
 # Create virtual machine
 resource "azurerm_windows_virtual_machine" "vm" {
-  name                  = "${var.vmname}-vm"
+  name                  = "${var.envname}-${var.vmname}-vm"
   computer_name         = "${var.vmname}"
   admin_username        = var.ad_admin_username
   admin_password        = var.ad_admin_password

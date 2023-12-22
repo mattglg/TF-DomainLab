@@ -3,6 +3,10 @@ variable "vmname" {
   type    = string
 }
 
+variable "envname" {
+  type    = string
+}
+
 #Location for DC resources
 variable "location" {
   type    = string

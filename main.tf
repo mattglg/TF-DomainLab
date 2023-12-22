@@ -37,6 +37,7 @@ module "dc1" {
     azurerm_resource_group = azurerm_resource_group.rg
     location = azurerm_resource_group.rg.location
     vmname = var.ad_dc1_name
+    envname = var.envname
     azurerm_subnet = azurerm_subnet.snet
     ipaddress = var.ad_dc1_ip_address
     dnsservers = local.dns_servers
@@ -55,6 +56,7 @@ module "dc2" {
     azurerm_resource_group = azurerm_resource_group.rg
     location = azurerm_resource_group.rg.location
     vmname = var.ad_dc2_name
+    envname = var.envname
     azurerm_subnet = azurerm_subnet.snet
     ipaddress = var.ad_dc2_ip_address
     dnsservers = local.dns_servers
@@ -70,7 +72,8 @@ module "memberserver" {
     depends_on = [module.dc2]
     count = var.member_server_count
     source = "./vm-member-server"
-    vmname = "${format("server-%02d", count.index + 1)}"
+    vmname = "${format("server%02d", count.index + 1)}"
+    envname = var.envname
     azurerm_resource_group = azurerm_resource_group.rg
     location = azurerm_resource_group.rg.location
     azurerm_subnet = azurerm_subnet.snet
