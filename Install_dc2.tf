@@ -1,13 +1,13 @@
 resource "time_sleep" "domain_setup" {
-  depends_on=[module.dc2 ]
-  create_duration = "120s"
+  depends_on = [module.dc2]
+  create_duration = "300s"
 
 }
 
 
 #Domain Join DC2
 resource "azurerm_virtual_machine_extension" "domjoin" {
-depends_on=[time_sleep.domain_setup]
+depends_on = [time_sleep.domain_setup]
 
 name = "domjoin"
 virtual_machine_id = module.dc2.id
