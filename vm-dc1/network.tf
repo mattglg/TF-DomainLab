@@ -6,25 +6,6 @@ resource "azurerm_public_ip" "pip" {
   allocation_method   = "Dynamic"
 }
 
-# Create Network Security Group and rules
-resource "azurerm_network_security_group" "nsg" {
-  name                = "${var.vmname}-nsg"
-  location            = var.azurerm_resource_group.location
-  resource_group_name = var.azurerm_resource_group.name
-
-  security_rule {
-    name                       = "RDP"
-    priority                   = 1000
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "3389"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-}
-
 # Create network interface
 resource "azurerm_network_interface" "nic" {
   name                = "${var.vmname}-nic"

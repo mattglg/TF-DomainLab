@@ -4,6 +4,24 @@ resource "azurerm_resource_group" "rg" {
   name     = "${var.envname}-rg"
 }
 
+#Create a Virtual Network for the lab environment
+resource "azurerm_virtual_network" "vnet" {
+  name                = "${var.envname}-vnet"
+  address_space       = [var.vnet_address_space]
+  dns_servers         = local.dns_servers
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+#Create a Subnet for the lab resources
+resource "azurerm_subnet" "snet" {
+  name                 = "${var.envname}-snet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.subnet_address_space]
+}
+
+#Create an availability group fpr the domain contollers
 resource "azurerm_availability_set" "dc-availability-set" {
   name                         = "${var.envname}-dc-avail"
   resource_group_name          = azurerm_resource_group.rg.name
@@ -13,52 +31,48 @@ resource "azurerm_availability_set" "dc-availability-set" {
   managed                      = true
 }
 
-#Create VM for DC1
+#Create and configure DC1
 module "dc1" {
-    source = "./vm-dc"
+    source = "./vm-dc1"
     azurerm_resource_group = azurerm_resource_group.rg
+    location = azurerm_resource_group.rg.location
     vmname = var.ad_dc1_name
-    azurerm_subnet = data.azurerm_subnet.snet
+    azurerm_subnet = azurerm_subnet.snet
     ipaddress = var.ad_dc1_ip_address
     dnsservers = local.dns_servers
     availability_set_id = azurerm_availability_set.dc-availability-set.id
+    ad_admin_password = var.ad_admin_password
+    ad_admin_username = var.ad_admin_username
+    ad_safe_mode_administrator_password = var.ad_safe_mode_administrator_password
+    ad_domain_name = var.ad_domain_name
+    ad_domain_netbios_name = var.ad_domain_netbios_name
 }
 
-#Create VM for DC1
+#Create and configure DC2
 module "dc2" {
-    depends_on=[module.dc1]
-    source = "./vm-dc"
+    depends_on = [module.dc1]
+    source = "./vm-dc2"
     azurerm_resource_group = azurerm_resource_group.rg
+    location = azurerm_resource_group.rg.location
     vmname = var.ad_dc2_name
-    azurerm_subnet = data.azurerm_subnet.snet
+    azurerm_subnet = azurerm_subnet.snet
     ipaddress = var.ad_dc2_ip_address
     dnsservers = local.dns_servers
     availability_set_id = azurerm_availability_set.dc-availability-set.id
+    ad_admin_password = var.ad_admin_password
+    ad_admin_username = var.ad_admin_username
+    ad_safe_mode_administrator_password = var.ad_safe_mode_administrator_password
+    ad_domain_name = var.ad_domain_name
+    ad_domain_netbios_name = var.ad_domain_netbios_name
 }
-
-
 
 /*
 module "vm1" {
-    source = "./vm2022"
+    depends_on = [module.dc2]
+    count = var.member_server_count
+    source = "./vm-member-server"
     azurerm_resource_group = azurerm_resource_group.rg
     vmname = "vm1"
     azurerm_subnet = data.azurerm_subnet.snet
 }
 */
-
-## Active Directory NSG for Clients ##
-
-# Create the security group for AD Users
-resource "azurerm_network_security_group" "active-directory-client-nsg" {
-  name                = "active-directory-client-nsg"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-# Create the security group for AD Domain Controllers
-resource "azurerm_network_security_group" "active-directory-dc-nsg" {
-  name                = "active-directory-dc-nsg"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
