@@ -70,7 +70,7 @@ module "memberserver" {
     depends_on = [module.dc2]
     count = var.member_server_count
     source = "./vm-member-server"
-    vmname = "server-${count.index}"
+    vmname = "${format("server-", count.index + 1)}"
     azurerm_resource_group = azurerm_resource_group.rg
     location = azurerm_resource_group.rg.location
     azurerm_subnet = azurerm_subnet.snet
