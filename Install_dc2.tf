@@ -45,8 +45,8 @@ locals {
   dc2_powershell_command = "${local.dc2_prereq_ad_1}; ${local.dc2_prereq_ad_2}; ${local.dc2_prereq_ad_3}; ${local.dc2_prereq_ad_4}; ${local.dc2_prereq_ad_5}; ${local.dc2_credentials_1}; ${local.dc2_credentials_2}; ${local.dc2_credentials_3}; ${local.dc2_install_ad_1}${local.dc2_install_ad_2}${local.dc2_install_ad_3}; ${local.dc2_shutdown_command}; ${local.dc2_exit_code_hack}"
 }
 
-/*
-# DC1 virtual machine extension - Install and configure AD
+
+# DC2 virtual machine extension - Install and configure AD
 resource "azurerm_virtual_machine_extension" "dc2-vm-extension" {
   depends_on=[azurerm_virtual_machine_extension.domjoin]
 
@@ -57,8 +57,7 @@ resource "azurerm_virtual_machine_extension" "dc2-vm-extension" {
   type_handler_version = "1.9"  
   settings = <<SETTINGS
   {
-    "commandToExecute": "powershell.exe -Command \"${local.dc1_powershell_command}\""
+    "commandToExecute": "powershell.exe -Command \"${local.dc2_powershell_command}\""
   }
   SETTINGS
 }
-*/
