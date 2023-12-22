@@ -66,13 +66,15 @@ module "dc2" {
     ad_domain_netbios_name = var.ad_domain_netbios_name
 }
 
-/*
-module "vm1" {
+module "memberserver" {
     depends_on = [module.dc2]
     count = var.member_server_count
     source = "./vm-member-server"
     azurerm_resource_group = azurerm_resource_group.rg
-    vmname = "vm1"
-    azurerm_subnet = data.azurerm_subnet.snet
+    vmname = "server-${count.index}"
+    location = azurerm_resource_group.rg.location
+    azurerm_subnet = azurerm_subnet.snet
+    ad_admin_password = var.ad_admin_password
+    ad_admin_username = var.ad_admin_username
+    ad_domain_name = var.ad_domain_name
 }
-*/
