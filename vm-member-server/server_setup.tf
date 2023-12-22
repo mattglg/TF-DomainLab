@@ -26,7 +26,7 @@ PROTECTED_SETTINGS
 
 #Variable input for the server_setup.ps1 script
 data "template_file" "server_setup" {
-    template = "${file("./vm-dc2/server_setup.ps1")}"
+    template = "${file("./vm-member-server/server_setup.ps1")}"
     vars = {
 
   }
