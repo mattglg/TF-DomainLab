@@ -13,6 +13,8 @@ param
 
 $SMAP = ConvertTo-SecureString -AsPlainText $ad_safe_mode_administrator_password -Force
 
+Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled False
+
 Install-WindowsFeature -name AD-Domain-Services -IncludeManagementTools
 Install-WindowsFeature DNS -IncludeAllSubFeature -IncludeManagementTools
 Set-DnsServerForwarder -IPAddress "8.8.8.8", "1.1.1.1"

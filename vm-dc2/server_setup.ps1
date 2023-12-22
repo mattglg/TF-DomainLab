@@ -18,6 +18,8 @@ $User = "$ad_admin_username@$ad_domain_name"
 $secStringPassword = ConvertTo-SecureString $ad_admin_password -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $user, $secStringPassword
 
+Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled False
+
 Install-WindowsFeature -name AD-Domain-Services -IncludeManagementTools
 #Install-WindowsFeature DNS -IncludeAllSubFeature -IncludeManagementTools
 
