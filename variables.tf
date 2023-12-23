@@ -32,6 +32,18 @@ variable "subnet_address_space" {
   default = "10.0.1.0/24"
 }
 
+variable "keyvault_name" {
+  type        = string
+  description = "This variable defines the KeyVault holding the domain and server passwords"
+  default = "kv-terraform-mattglg"
+}
+
+variable "domain_password_secret_name" {
+  type        = string
+  description = "This variable defines the name of the secret holding the domain password"
+  default = "domainadmin"
+}
+
 # DOMAIN CONTROLLER 1 VARIABLES #
 
 # domain controller 1 name

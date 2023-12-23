@@ -34,8 +34,8 @@ resource "azurerm_availability_set" "dc-availability-set" {
 #Get passwords from KeyVault
 module "ad_admin_password" {
   source = "./kv-secret"
-  keyvault_name = "kv-terraform"
-  secret_name = "domainadmin"
+  keyvault_name = var.keyvault_name
+  secret_name = var.domain_password_secret_name
 }
 
 #Create and configure DC1
