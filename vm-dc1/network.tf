@@ -8,9 +8,9 @@ resource "azurerm_public_ip" "pip" {
 
 # Create network interface
 resource "azurerm_network_interface" "nic" {
-  name                = "${var.vmname}-nic"
-  location            = var.azurerm_resource_group.location
-  resource_group_name = var.azurerm_resource_group.name
+  name                    = "${var.vmname}-nic"
+  location                = var.azurerm_resource_group.location
+  resource_group_name     = var.azurerm_resource_group.name
   internal_dns_name_label = var.vmname
   dns_servers             = var.dnsservers
 

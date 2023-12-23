@@ -58,58 +58,58 @@ resource "azurerm_availability_set" "dc-availability-set" {
 
 #Get passwords from KeyVault
 module "ad_admin_password" {
-  source = "./kv-secret"
+  source        = "./kv-secret"
   keyvault_name = var.keyvault_name
-  secret_name = var.domain_password_secret_name
+  secret_name   = var.domain_password_secret_name
 }
 
 #Create and configure DC1
 module "dc1" {
-    source = "./vm-dc1"
-    azurerm_resource_group = azurerm_resource_group.rg
-    location = azurerm_resource_group.rg.location
-    vmname = var.ad_dc1_name
-    envname = var.envname
-    azurerm_subnet = azurerm_subnet.snet
-    ipaddress = var.ad_dc1_ip_address
-    dnsservers = local.dns_servers
-    availability_set_id = azurerm_availability_set.dc-availability-set.id
-    ad_admin_password = module.ad_admin_password.secret_value
-    ad_admin_username = var.ad_admin_username
+    source                              = "./vm-dc1"
+    azurerm_resource_group              = azurerm_resource_group.rg
+    location                            = azurerm_resource_group.rg.location
+    vmname                              = var.ad_dc1_name
+    envname                             = var.envname
+    azurerm_subnet                      = azurerm_subnet.snet
+    ipaddress                           = var.ad_dc1_ip_address
+    dnsservers                          = local.dns_servers
+    availability_set_id                 = azurerm_availability_set.dc-availability-set.id
+    ad_admin_password                   = module.ad_admin_password.secret_value
+    ad_admin_username                   = var.ad_admin_username
     ad_safe_mode_administrator_password = module.ad_admin_password.secret_value
-    ad_domain_name = var.ad_domain_name
-    ad_domain_netbios_name = var.ad_domain_netbios_name
+    ad_domain_name                      = var.ad_domain_name
+    ad_domain_netbios_name              = var.ad_domain_netbios_name
 }
 
 #Create and configure DC2
 module "dc2" {
-    depends_on = [module.dc1]
-    source = "./vm-dc2"
-    azurerm_resource_group = azurerm_resource_group.rg
-    location = azurerm_resource_group.rg.location
-    vmname = var.ad_dc2_name
-    envname = var.envname
-    azurerm_subnet = azurerm_subnet.snet
-    ipaddress = var.ad_dc2_ip_address
-    dnsservers = local.dns_servers
-    availability_set_id = azurerm_availability_set.dc-availability-set.id
-    ad_admin_password = module.ad_admin_password.secret_value
-    ad_admin_username = var.ad_admin_username
+    depends_on                          = [module.dc1]
+    source                              = "./vm-dc2"
+    azurerm_resource_group              = azurerm_resource_group.rg
+    location                            = azurerm_resource_group.rg.location
+    vmname                              = var.ad_dc2_name
+    envname                             = var.envname
+    azurerm_subnet                      = azurerm_subnet.snet
+    ipaddress                           = var.ad_dc2_ip_address
+    dnsservers                          = local.dns_servers
+    availability_set_id                 = azurerm_availability_set.dc-availability-set.id
+    ad_admin_password                   = module.ad_admin_password.secret_value
+    ad_admin_username                   = var.ad_admin_username
     ad_safe_mode_administrator_password = module.ad_admin_password.secret_value
-    ad_domain_name = var.ad_domain_name
-    ad_domain_netbios_name = var.ad_domain_netbios_name
+    ad_domain_name                      = var.ad_domain_name
+    ad_domain_netbios_name              = var.ad_domain_netbios_name
 }
 
 module "memberserver" {
-    depends_on = [module.dc2]
-    count = var.member_server_count
-    source = "./vm-member-server"
-    vmname = "${format("server%02d", count.index + 1)}"
-    envname = var.envname
-    azurerm_resource_group = azurerm_resource_group.rg
-    location = azurerm_resource_group.rg.location
-    azurerm_subnet = azurerm_subnet.snet
-    ad_admin_password = module.ad_admin_password.secret_value
-    ad_admin_username = var.ad_admin_username
-    ad_domain_name = var.ad_domain_name
+    depends_on              = [module.dc2]
+    count                   = var.member_server_count
+    source                  = "./vm-member-server"
+    vmname                  = "${format("server%02d", count.index + 1)}"
+    envname                 = var.envname
+    azurerm_resource_group  = azurerm_resource_group.rg
+    location                = azurerm_resource_group.rg.location
+    azurerm_subnet          = azurerm_subnet.snet
+    ad_admin_password       = module.ad_admin_password.secret_value
+    ad_admin_username       = var.ad_admin_username
+    ad_domain_name          = var.ad_domain_name
 }

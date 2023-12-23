@@ -41,7 +41,7 @@ data "template_file" "server_setup" {
 
 #Run Server Setup Script to Install Active Directory on the DC01 VM
 resource "azurerm_virtual_machine_extension" "server_setup" {
-  depends_on = [azurerm_virtual_machine_extension.domjoin]
+  depends_on           = [azurerm_virtual_machine_extension.domjoin]
   name                 = "server_setup"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
