@@ -31,6 +31,13 @@ resource "azurerm_availability_set" "dc-availability-set" {
   managed                      = true
 }
 
+#Get passwords from KeyVault
+module "ad_admin_password" {
+  source = "./kv-secret"
+  keyvault_name = "kv-terraform"
+  secret_name = "domainadmin"
+}
+
 #Create and configure DC1
 module "dc1" {
     source = "./vm-dc1"
@@ -42,9 +49,9 @@ module "dc1" {
     ipaddress = var.ad_dc1_ip_address
     dnsservers = local.dns_servers
     availability_set_id = azurerm_availability_set.dc-availability-set.id
-    ad_admin_password = var.ad_admin_password
+    ad_admin_password = module.ad_admin_password.secret_value
     ad_admin_username = var.ad_admin_username
-    ad_safe_mode_administrator_password = var.ad_safe_mode_administrator_password
+    ad_safe_mode_administrator_password = module.ad_admin_password.secret_value
     ad_domain_name = var.ad_domain_name
     ad_domain_netbios_name = var.ad_domain_netbios_name
 }
@@ -61,9 +68,9 @@ module "dc2" {
     ipaddress = var.ad_dc2_ip_address
     dnsservers = local.dns_servers
     availability_set_id = azurerm_availability_set.dc-availability-set.id
-    ad_admin_password = var.ad_admin_password
+    ad_admin_password = module.ad_admin_password.secret_value
     ad_admin_username = var.ad_admin_username
-    ad_safe_mode_administrator_password = var.ad_safe_mode_administrator_password
+    ad_safe_mode_administrator_password = module.ad_admin_password.secret_value
     ad_domain_name = var.ad_domain_name
     ad_domain_netbios_name = var.ad_domain_netbios_name
 }
@@ -77,7 +84,7 @@ module "memberserver" {
     azurerm_resource_group = azurerm_resource_group.rg
     location = azurerm_resource_group.rg.location
     azurerm_subnet = azurerm_subnet.snet
-    ad_admin_password = var.ad_admin_password
+    ad_admin_password = module.ad_admin_password.secret_value
     ad_admin_username = var.ad_admin_username
     ad_domain_name = var.ad_domain_name
 }
