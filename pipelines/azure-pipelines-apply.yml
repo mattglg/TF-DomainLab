@@ -35,7 +35,6 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            commandOptions: '-input=false'
             environmentServiceNameAzureRM: 'MSDN'
         - task: TerraformTaskV4@4
           displayName: show
