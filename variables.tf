@@ -7,7 +7,7 @@ variable "envname" {
 
 variable "member_server_count" {
   type    = number
-  default = "1"
+  default = "2"
 }
 
 variable "location" {
