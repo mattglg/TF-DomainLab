@@ -5,5 +5,5 @@ data "azurerm_key_vault" "kv" {
 
 data "azurerm_key_vault_secret" "secret" {
   name         = var.secret_name
-  key_vault_id = data.azurerm_key_vault.existing.id
+  key_vault_id = data.azurerm_key_vault.kv.id
 }
