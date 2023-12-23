@@ -44,7 +44,7 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_port_range          = [80, 443]
+    source_port_ranges          = [80, 443]
     destination_port_range     = "*"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
