@@ -2,6 +2,7 @@
 Spin up a configuarable test environment in azure
 2 DC's
 Configurable number of member servers
+Pipeline for Azure DevOps
 
 # TODO
 1.	Variable for Site Name
